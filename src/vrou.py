@@ -14,7 +14,13 @@ def main():
 			if len(sys.argv) <= i+1:
 				print("program")
 			else:
-				PROGRAM = str(sys.argv[i+1])
+				installpak = 1+i
+				while installpak < len(sys.argv):
+					
+					install(str(sys.argv[installpak]))
+					installpak +=1
 
+def install(program = "none"):
+	print("installing " + program)
 if __name__ == "__main__":
 	main()
