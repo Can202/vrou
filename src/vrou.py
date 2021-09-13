@@ -16,8 +16,8 @@ def main():
 			else:
 				installpak = 1+i
 				while installpak < len(sys.argv):
-					
-					install(str(sys.argv[installpak]))
+					if "--" not in sys.argv[installpak]:
+						install(str(sys.argv[installpak]))
 					installpak +=1
 
 def install(program = "none"):
