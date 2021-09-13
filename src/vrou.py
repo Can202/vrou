@@ -3,7 +3,7 @@ import os
 from sys import exit
 
 def main():
-	
+	print("h")
 
-if __init__ == "__main__":
+if __name__ == "__main__":
 	main()
