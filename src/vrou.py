@@ -37,5 +37,9 @@ def install(program = "none"):
 		os.system("dnf -y install " + program)
 	if os.path.exists("/usr/bin/pacman"):
 		os.system("pacman -S " + program)
+	if os.path.exists("/usr/bin/snap"):
+		os.system("snap install " + program)
+	if os.path.exists("/usr/bin/flatpak"):
+		os.system("flatpak install flathub " + program)
 if __name__ == "__main__":
 	main()
