@@ -29,48 +29,50 @@ def main():
 					installpak +=1
 
 def install(program = "none"):
-
-	extra=""
+	dpm = detect_pm()
 	# Detect snap
 	if os.path.exists("/usr/bin/snap"):
 		extra += " snap "
-		print("you can use snap, or your current package manager")
+		print("you can use snap, or your current package manager (" + dpm +")")
 		anr = input("Use snap? (Y/n)")
 		if "Y" in anr or "y" in anr:
 			os.system("snap install " + program)
 	#Detect flatpak
 	if os.path.exists("/usr/bin/flatpak"):
 		extra += " flatpak "
-		print("you can use flatpak (flathub), or your current package manager")
+		print("you can use flatpak (flathub), or your current package manager (" + dpm +")")
 		anr = input("Use flatpak? (Y/n)")
 		if "Y" in anr or "y" in anr:
 			os.system("flatpak install flathub " + program)
 
-	#Detect Choco
-	if os.path.exists("C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
+	if dpm == "choco":
 		print("choco detect")
-		cpm = "choco"
 		os.system("powershell -Command choco install " + program)
-
-	#Detect zypper
-	if os.path.exists("/usr/bin/zypper"):
+	elif dpm == "zypper":
+		print("zypper detect")
 		os.system("zypper in -n " + program)
-		cpm = "zypper"
-
-	#Detect apt
-	if os.path.exists("/usr/bin/apt"):
+	elif dpm == "apt":
+		print("apt detect")
 		os.system("apt install -y " + program)
-		cpm = "apt"
-
-	# Detect dnf
-	if os.path.exists("/usr/bin/dnf"):
+	elif dpm == "dnf":
+		print("dnf detect")
 		os.system("dnf -y install " + program)
-		cpm = "dnf"
-
-	#Detect pacman
-	if os.path.exists("/usr/bin/pacman"):
+	elif dpm == "pacman":
+		print("pacman detect")
 		os.system("pacman -S " + program)
-		cpm = "pacman"
+
+def detect_pm():
+	if os.path.exists("C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
+		return "choco"
+	if os.path.exists("/usr/bin/zypper"):
+		return "zypper"
+	if os.path.exists("/usr/bin/apt"):
+		return "apt"
+	if os.path.exists("/usr/bin/dnf"):
+		return "dnf"
+	if os.path.exists("/usr/bin/pacman"):
+		return "pacman"
+
 
 if __name__ == "__main__":
 	main()
