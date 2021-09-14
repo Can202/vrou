@@ -16,10 +16,17 @@ SEARCH2="se"
 SEARCH3="-Ss"
 PROGRAM=""
 def main():
+	other="none"
 	for i in range(len(sys.argv)):
 		valueos = other_simple(sys.argv[i])
 		if valueos == "yes":
 			print("yes")
+		if sys.argv[i] == "--snap":
+			other="snap"
+		elif sys.argv[i] == "--flatpak":
+			other="flatpak"
+
+
 		if sys.argv[i] == INSTALL or sys.argv[i] == INSTALL2 or sys.argv[i] == INSTALL3:
 			if detect_root() == False:
 				print("need root")
@@ -31,7 +38,7 @@ def main():
 				installpak = 1+i
 				while installpak < len(sys.argv):
 					if "--" not in sys.argv[installpak]:
-						install(str(sys.argv[installpak]))
+						install(str(sys.argv[installpak]), other=other)
 					installpak +=1
 
 		if sys.argv[i] == REMOVE or sys.argv[i] == REMOVE2 or sys.argv[i] == REMOVE3:
@@ -45,7 +52,7 @@ def main():
 				pak = 1+i
 				while pak < len(sys.argv):
 					if "--" not in sys.argv[pak]:
-						remove(str(sys.argv[pak]))
+						remove(str(sys.argv[pak]), other=other)
 					pak +=1
 
 		if sys.argv[i] == SEARCH or sys.argv[i] == SEARCH2 or sys.argv[i] == SEARCH3:
@@ -56,10 +63,10 @@ def main():
 				pak = 1+i
 				while pak < len(sys.argv):
 					if "--" not in sys.argv[pak]:
-						search(str(sys.argv[pak]))
+						search(str(sys.argv[pak]), other=other)
 					pak +=1
 
-def install(program = "none"):
+def install(program = "none", other="none"):
 	if program == "none":
 		return 1
 	dpm = detect_pm()
@@ -93,7 +100,7 @@ def install(program = "none"):
 		os.system("pacman -S " + program)
 	return 0
 
-def remove(program = "none"):
+def remove(program = "none", other="none"):
 	if program == "none":
 		return 1
 	dpm = detect_pm()
@@ -127,7 +134,7 @@ def remove(program = "none"):
 		os.system("pacman -R " + program)
 	return 0
 
-def search(program = "none"):
+def search(program = "none", other="none"):
 	if program == "none":
 		return 1
 	dpm = detect_pm()
@@ -142,7 +149,7 @@ def search(program = "none"):
 		print("you can use flatpak, or your current package manager (" + dpm +")")
 		anr = input("Use flatpak? (Y/n)")
 		if "Y" in anr or "y" in anr:
-			os.system("flatpak uninstall " + program)
+			os.system("flatpak flathub search " + program)
 
 	if dpm == "choco":
 		print("choco detect")
