@@ -72,16 +72,12 @@ def install(program = "none", other="none"):
 	dpm = detect_pm()
 	# Detect snap
 	if os.path.exists("/usr/bin/snap") and other == "snap":
-		print("you can use snap, or your current package manager (" + dpm +")")
-		anr = input("Use snap? (Y/n)")
-		if "Y" in anr or "y" in anr:
-			os.system("snap install " + program)
+		os.system("snap install " + program)
+		exit()
 	#Detect flatpak
 	if os.path.exists("/usr/bin/flatpak") and other == "flatpak":
-		print("you can use flatpak (flathub), or your current package manager (" + dpm +")")
-		anr = input("Use flatpak? (Y/n)")
-		if "Y" in anr or "y" in anr:
-			os.system("flatpak install flathub " + program)
+		os.system("flatpak install flathub " + program)
+		exit()
 
 	if dpm == "choco":
 		print("choco detect")
