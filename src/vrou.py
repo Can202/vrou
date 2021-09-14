@@ -50,13 +50,13 @@ def install(program = "none"):
 		os.system("powershell -Command choco install " + program)
 	elif dpm == "zypper":
 		print("zypper detect")
-		os.system("zypper in -n " + program)
+		os.system("zypper in " + program)
 	elif dpm == "apt":
 		print("apt detect")
-		os.system("apt install -y " + program)
+		os.system("apt install " + program)
 	elif dpm == "dnf":
 		print("dnf detect")
-		os.system("dnf -y install " + program)
+		os.system("dnf install " + program)
 	elif dpm == "pacman":
 		print("pacman detect")
 		os.system("pacman -S " + program)
