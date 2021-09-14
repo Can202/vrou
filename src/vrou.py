@@ -71,13 +71,13 @@ def install(program = "none", other="none"):
 		return 1
 	dpm = detect_pm()
 	# Detect snap
-	if os.path.exists("/usr/bin/snap"):
+	if os.path.exists("/usr/bin/snap") and other == "snap":
 		print("you can use snap, or your current package manager (" + dpm +")")
 		anr = input("Use snap? (Y/n)")
 		if "Y" in anr or "y" in anr:
 			os.system("snap install " + program)
 	#Detect flatpak
-	if os.path.exists("/usr/bin/flatpak"):
+	if os.path.exists("/usr/bin/flatpak") and other == "flatpak":
 		print("you can use flatpak (flathub), or your current package manager (" + dpm +")")
 		anr = input("Use flatpak? (Y/n)")
 		if "Y" in anr or "y" in anr:
@@ -100,7 +100,7 @@ def install(program = "none", other="none"):
 		os.system("pacman -S " + program)
 	return 0
 
-def remove(program = "none", other="none"):
+def remove(program = "none", other="none") and other == "snap":
 	if program == "none":
 		return 1
 	dpm = detect_pm()
@@ -111,7 +111,7 @@ def remove(program = "none", other="none"):
 		if "Y" in anr or "y" in anr:
 			os.system("snap remove " + program)
 	#Detect flatpak
-	if os.path.exists("/usr/bin/flatpak"):
+	if os.path.exists("/usr/bin/flatpak") and other == "flatpak":
 		print("you can use flatpak, or your current package manager (" + dpm +")")
 		anr = input("Use flatpak? (Y/n)")
 		if "Y" in anr or "y" in anr:
@@ -139,13 +139,13 @@ def search(program = "none", other="none"):
 		return 1
 	dpm = detect_pm()
 	# Detect snap
-	if os.path.exists("/usr/bin/snap"):
+	if os.path.exists("/usr/bin/snap") and other == "snap":
 		print("you can use snap, or your current package manager (" + dpm +")")
 		anr = input("Use snap? (Y/n)")
 		if "Y" in anr or "y" in anr:
 			os.system("snap search " + program)
 	#Detect flatpak
-	if os.path.exists("/usr/bin/flatpak"):
+	if os.path.exists("/usr/bin/flatpak") and other == "flatpak":
 		print("you can use flatpak, or your current package manager (" + dpm +")")
 		anr = input("Use flatpak? (Y/n)")
 		if "Y" in anr or "y" in anr:
