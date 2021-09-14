@@ -29,6 +29,8 @@ def main():
 					installpak +=1
 
 def install(program = "none"):
+	if program == "none":
+		return 1
 	dpm = detect_pm()
 	# Detect snap
 	if os.path.exists("/usr/bin/snap"):
@@ -60,6 +62,7 @@ def install(program = "none"):
 	elif dpm == "pacman":
 		print("pacman detect")
 		os.system("pacman -S " + program)
+	return 0
 
 def detect_pm():
 	if os.path.exists("C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
