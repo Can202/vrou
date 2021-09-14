@@ -37,11 +37,11 @@ def main():
 			if len(sys.argv) <= i+1:
 				print("program")
 			else:
-				installpak = 1+i
-				while installpak < len(sys.argv):
-					if "--" not in sys.argv[installpak]:
-						install(str(sys.argv[installpak]))
-					installpak +=1
+				pak = 1+i
+				while pak < len(sys.argv):
+					if "--" not in sys.argv[pak]:
+						remove(str(sys.argv[pak]))
+					pak +=1
 
 def install(program = "none"):
 	if program == "none":
@@ -77,6 +77,42 @@ def install(program = "none"):
 	elif dpm == "pacman":
 		print("pacman detect")
 		os.system("pacman -S " + program)
+	return 0
+
+def remove(program = "none"):
+	if program == "none":
+		return 1
+	dpm = detect_pm()
+	# Detect snap
+	if os.path.exists("/usr/bin/snap"):
+		extra += " snap "
+		print("you can use snap, or your current package manager (" + dpm +")")
+		anr = input("Use snap? (Y/n)")
+		if "Y" in anr or "y" in anr:
+			os.system("snap remove " + program)
+	#Detect flatpak
+	if os.path.exists("/usr/bin/flatpak"):
+		extra += " flatpak "
+		print("you can use flatpak (flathub), or your current package manager (" + dpm +")")
+		anr = input("Use flatpak? (Y/n)")
+		if "Y" in anr or "y" in anr:
+			os.system("flatpak uninstall " + program)
+
+	if dpm == "choco":
+		print("choco detect")
+		os.system("powershell -Command choco uninstall " + program + " & pause")
+	elif dpm == "zypper":
+		print("zypper detect")
+		os.system("zypper rm " + program)
+	elif dpm == "apt":
+		print("apt detect")
+		os.system("apt remove " + program)
+	elif dpm == "dnf":
+		print("dnf detect")
+		os.system("dnf remove " + program)
+	elif dpm == "pacman":
+		print("pacman detect")
+		os.system("pacman -R " + program)
 	return 0
 
 def detect_pm():
