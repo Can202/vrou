@@ -100,12 +100,12 @@ def install(program = "none", other="none"):
 		os.system("pacman -S " + program)
 	return 0
 
-def remove(program = "none", other="none") and other == "snap":
+def remove(program = "none", other="none"):
 	if program == "none":
 		return 1
 	dpm = detect_pm()
 	# Detect snap
-	if os.path.exists("/usr/bin/snap"):
+	if os.path.exists("/usr/bin/snap") and other == "snap":
 		print("you can use snap, or your current package manager (" + dpm +")")
 		anr = input("Use snap? (Y/n)")
 		if "Y" in anr or "y" in anr:
