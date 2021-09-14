@@ -93,7 +93,7 @@ def remove(program = "none"):
 	#Detect flatpak
 	if os.path.exists("/usr/bin/flatpak"):
 		extra += " flatpak "
-		print("you can use flatpak (flathub), or your current package manager (" + dpm +")")
+		print("you can use flatpak, or your current package manager (" + dpm +")")
 		anr = input("Use flatpak? (Y/n)")
 		if "Y" in anr or "y" in anr:
 			os.system("flatpak uninstall " + program)
