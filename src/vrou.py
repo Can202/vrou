@@ -6,6 +6,10 @@ import subprocess
 INSTALL="install"
 INSTALL2="in"
 INSTALL3="-S"
+
+REMOVE="remove"
+REMOVE2="rm"
+REMOVE3="-R"
 PROGRAM=""
 def main():
 	
@@ -19,6 +23,17 @@ def main():
 	for i in range(len(sys.argv)):
 		if sys.argv[i] == INSTALL or sys.argv[i] == INSTALL2 or sys.argv[i] == INSTALL3:
 			print("install")
+			if len(sys.argv) <= i+1:
+				print("program")
+			else:
+				installpak = 1+i
+				while installpak < len(sys.argv):
+					if "--" not in sys.argv[installpak]:
+						install(str(sys.argv[installpak]))
+					installpak +=1
+
+		if sys.argv[i] == REMOVE or sys.argv[i] == REMOVE2 or sys.argv[i] == REMOVE3:
+			print("remove")
 			if len(sys.argv) <= i+1:
 				print("program")
 			else:
