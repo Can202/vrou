@@ -34,10 +34,17 @@ def install(program = "none"):
 	# Detect snap
 	if os.path.exists("/usr/bin/snap"):
 		extra += " snap "
+		print("you can use snap, or your current package manager")
+		anr = input("Use snap? (Y/n)")
+		if "Y" in anr or "y" in anr:
+			os.system("snap install " + program)
 	#Detect flatpak
 	if os.path.exists("/usr/bin/flatpak"):
 		extra += " flatpak "
-
+		print("you can use flatpak (flathub), or your current package manager")
+		anr = input("Use flatpak? (Y/n)")
+		if "Y" in anr or "y" in anr:
+			os.system("flatpak install flathub " + program)
 
 	#Detect Choco
 	if os.path.exists("C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
@@ -65,16 +72,5 @@ def install(program = "none"):
 		os.system("pacman -S " + program)
 		cpm = "pacman"
 
-	if extra != "":
-		if "snap" in extra:
-			print("you can use snap, or your current package manager (" + cpm + ")")
-			anr = input("Use snap? (Y/n)")
-			if "Y" in anr or "y" in anr:
-				os.system("snap install " + program)
-		if "flatpak" in extra:
-			print("you can use flatpak, or your current package manager (" + cpm + ")")
-			anr = input("Use snap? (Y/n)")
-			if "Y" in anr or "y" in anr:
-				os.system("flatpak install flathub " + program)
 if __name__ == "__main__":
 	main()
