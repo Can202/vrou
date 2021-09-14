@@ -64,7 +64,7 @@ def install(program = "none"):
 
 	if dpm == "choco":
 		print("choco detect")
-		os.system("powershell -Command choco install " + program)
+		os.system("powershell -Command choco install " + program + " & pause")
 	elif dpm == "zypper":
 		print("zypper detect")
 		os.system("zypper in " + program)
@@ -114,6 +114,44 @@ def remove(program = "none"):
 		print("pacman detect")
 		os.system("pacman -R " + program)
 	return 0
+
+def search(program = "none"):
+	if program == "none":
+		return 1
+	dpm = detect_pm()
+	# Detect snap
+	if os.path.exists("/usr/bin/snap"):
+		extra += " snap "
+		print("you can use snap, or your current package manager (" + dpm +")")
+		anr = input("Use snap? (Y/n)")
+		if "Y" in anr or "y" in anr:
+			os.system("snap search " + program)
+	#Detect flatpak
+	if os.path.exists("/usr/bin/flatpak"):
+		extra += " flatpak "
+		print("you can use flatpak, or your current package manager (" + dpm +")")
+		anr = input("Use flatpak? (Y/n)")
+		if "Y" in anr or "y" in anr:
+			os.system("flatpak uninstall " + program)
+
+	if dpm == "choco":
+		print("choco detect")
+		os.system("powershell -Command choco search " + program + " & pause")
+	elif dpm == "zypper":
+		print("zypper detect")
+		os.system("zypper search " + program)
+	elif dpm == "apt":
+		print("apt detect")
+		os.system("apt search " + program)
+	elif dpm == "dnf":
+		print("dnf detect")
+		os.system("dnf search " + program)
+	elif dpm == "pacman":
+		print("pacman detect")
+		os.system("pacman -Ss " + program)
+	return 0
+
+
 
 def detect_pm():
 	if os.path.exists("C:\\ProgramData\\chocolatey\\bin\\choco.exe"):
