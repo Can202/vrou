@@ -10,18 +10,21 @@ INSTALL3="-S"
 REMOVE="remove"
 REMOVE2="rm"
 REMOVE3="-R"
+
+SEARCH="search"
+SEARCH2="se"
+SEARCH3="-Ss"
 PROGRAM=""
 def main():
-	
-	if os.name == "posix":
-		if "root" not in str(subprocess.check_output(["whoami"])):
-			print("you need root")
-			exit()
+
 		
 	
 	print("Welcome to vrou")
 	for i in range(len(sys.argv)):
 		if sys.argv[i] == INSTALL or sys.argv[i] == INSTALL2 or sys.argv[i] == INSTALL3:
+			if detect_root() == False:
+				print("need root")
+				exit()
 			print("install")
 			if len(sys.argv) <= i+1:
 				print("program")
@@ -33,6 +36,9 @@ def main():
 					installpak +=1
 
 		if sys.argv[i] == REMOVE or sys.argv[i] == REMOVE2 or sys.argv[i] == REMOVE3:
+			if detect_root() == False:
+				print("need root")
+				exit()
 			print("remove")
 			if len(sys.argv) <= i+1:
 				print("program")
@@ -41,6 +47,17 @@ def main():
 				while pak < len(sys.argv):
 					if "--" not in sys.argv[pak]:
 						remove(str(sys.argv[pak]))
+					pak +=1
+
+		if sys.argv[i] == SEARCH or sys.argv[i] == SEARCH2 or sys.argv[i] == SEARCH3:
+			print("remove")
+			if len(sys.argv) <= i+1:
+				print("program")
+			else:
+				pak = 1+i
+				while pak < len(sys.argv):
+					if "--" not in sys.argv[pak]:
+						search(str(sys.argv[pak]))
 					pak +=1
 
 def install(program = "none"):
@@ -151,6 +168,14 @@ def search(program = "none"):
 		os.system("pacman -Ss " + program)
 	return 0
 
+def detect_root():
+	if os.name == "posix":
+		if "root" not in str(subprocess.check_output(["whoami"])):
+			return False
+		else:
+			return True
+	else:
+		return True
 
 
 def detect_pm():
