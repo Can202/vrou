@@ -16,11 +16,8 @@ SEARCH2="se"
 SEARCH3="-Ss"
 PROGRAM=""
 def main():
-
-		
-	
-	print("Welcome to vrou")
 	for i in range(len(sys.argv)):
+		other_simple(sys.argv[i])
 		if sys.argv[i] == INSTALL or sys.argv[i] == INSTALL2 or sys.argv[i] == INSTALL3:
 			if detect_root() == False:
 				print("need root")
@@ -168,6 +165,13 @@ def search(program = "none"):
 		os.system("pacman -Ss " + program)
 	return 0
 
+def other_simple(command):
+	if command == "-h" or command == "--help":
+		print("xD")
+		exit()
+	elif command == "-v" or command == "--version":
+		print("v0.1-dev.1")
+		exit()
 def detect_root():
 	if os.name == "posix":
 		if "root" not in str(subprocess.check_output(["whoami"])):
